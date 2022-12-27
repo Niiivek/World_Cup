@@ -2,8 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "Box.hpp"
-#include "Boss_team.hpp"
-#include "Normal.team.hpp"
+#include "Box_teams.hpp"
 #include <iostream>
 #include <string>
 #include <list>
@@ -94,9 +93,12 @@ int main() {
     SDL_Quit();
     }*/
     Boss_team Case1("chine","comment vas tu");
+    Normal_team Case2("france","hi");
     vector <Box*> Board;
     Board.push_back(&Case1);
+    Board.push_back(&Case2);
     Board[0]->affiche();
+    Board[1]->affiche();
     return 0;
 
 }

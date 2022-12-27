@@ -13,4 +13,14 @@ public:
     void affiche() override;
 private:
     string question;
+    int score;
+};
+
+class Normal_team: public Box_team{
+public:
+    Normal_team(string pays,string q);
+    void affiche() override;
+private:
+    string question;
+    int score;
 };

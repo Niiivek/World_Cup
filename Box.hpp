@@ -17,7 +17,7 @@ public:
 
 class Box_team: public Box{
 public: 
-    list<string> question;
+    string categorie;
     void affiche() override{cout <<"hi2"<<endl;}  
 };
 

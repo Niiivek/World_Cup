@@ -2,7 +2,6 @@
 #define CATCH_CONFIG_MAIN
 
 #include "catch.hpp"
-#include "Box_lucky.hpp"
 #include "Box.hpp"
 #include <iostream>
 #include <string>
