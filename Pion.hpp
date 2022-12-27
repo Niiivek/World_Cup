@@ -9,7 +9,13 @@ using namespace std;
 
 class Pion{
 public:
+    Pion(string n);
+    void deplacement(int move);
+    void augmenter_score(int high);
+    void diminuer_score(int lower);
     //Variables
     string name;
+    int indice;
+    int score;
     //Methods
 };

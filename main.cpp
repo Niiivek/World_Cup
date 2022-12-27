@@ -3,6 +3,8 @@
 #include <SDL2/SDL_image.h>
 #include "Box.hpp"
 #include "Box_teams.hpp"
+#include "Box_others.hpp"
+#include "Pion.hpp"
 #include <iostream>
 #include <string>
 #include <list>
@@ -92,13 +94,19 @@ int main() {
     // Quit the SDL library
     SDL_Quit();
     }*/
-    Boss_team Case1("chine","comment vas tu");
-    Normal_team Case2("france","hi");
+    
+    Boss_team Case1("chine","comment vas tu",10);
+    Normal_team Case2("france","hi",5);
+    Lucky_box Case3("Chance","Tu est qualifié à la phase suivante");
     vector <Box*> Board;
     Board.push_back(&Case1);
     Board.push_back(&Case2);
+    Board.push_back(&Case3);
     Board[0]->affiche();
     Board[1]->affiche();
+    Board[2]->affiche();
+
+    Pion joueur1("mm");
     return 0;
 
 }
