@@ -1,5 +1,6 @@
 CC=g++
-CCFLAGS= -Wall -Werror -std=c++11 -g
+#CCFLAGS= -Wall -Werror -std=c++11 -g 
+CCFLAGS= -Wall -std=c++11 -g 
 LIBFLAGS=`pkg-config --cflags --libs sdl2 sdl2_image `
 SRC= $(wildcard *.cpp)
 OBJ= $(SRC:.cpp=.o)
@@ -10,13 +11,13 @@ EXEC= test
 all: $(EXEC)
 
 $(EXEC): $(OBJ)
-	$(CC) $(LIBFLAGS) $(CCFLAGS) $^ -o $@  
+	$(CC)  $(CCFLAGS)  $^ -o $@  $(LIBFLAGS)
 
 %.o: %.cpp
-	$(CC) $(LIBFLAGS) -o $@ -c $<
+	$(CC) $(LIBFLAGS) $(CCFLAGS) -o $@ -c $<
 
 .depend:
-	g++ $(LIBFLAGS)  -MM $(SRC) > .depends
+	g++ $(CCFLAGS) $(LIBFLAGS) -MM $(SRC) > .depends
 
 clean:
 	rm -f $(OBJ) $(EXEC)

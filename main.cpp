@@ -1,12 +1,22 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include "Box.hpp"
+#include "Boss_team.hpp"
+#include "Normal.team.hpp"
+#include <iostream>
+#include <string>
+#include <list>
+using namespace std;
 
 // Screen dimensions
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+//const int SCREEN_WIDTH = 640;
+//const int SCREEN_HEIGHT = 480;
+
 
 int main() {
+    /*if(0){
+
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
@@ -82,6 +92,11 @@ int main() {
 
     // Quit the SDL library
     SDL_Quit();
-
+    }*/
+    Boss_team Case1("chine","comment vas tu");
+    vector <Box*> Board;
+    Board.push_back(&Case1);
+    Board[0]->affiche();
     return 0;
+
 }
