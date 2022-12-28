@@ -16,7 +16,7 @@ private:
 
 class Lucky_box: public Box{
 public:
-    Lucky_box(string chance,string effet);
+    Lucky_box(string chance,string e);
     void affiche() override;
 private:
     string effet;
