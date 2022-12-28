@@ -193,8 +193,8 @@ if (font == nullptr) {
   }
 
  // Set up the quiz questions and answers
-std::vector<std::string> questions = {"What is the capital of France?", "What is the currency of Japan?", "What is the tallest mountain in the world?"};
-std::vector<std::string> answers = {"Paris", "Yen", "Mount Everest"};
+std::vector<std::string> questions = {"What is the capital of France?", "What is the currency of Japan?"};
+std::vector<std::string> answers = {"Paris", "Yen"};
 int currentQuestion = 0;
 int score = 0;
 
@@ -210,7 +210,17 @@ for (int i = 0; i < choices.size(); i++) {
   buttonRects.push_back(rect);
 }
 
+// Set up the "SHOW_RESULT" state
+std::string resultText;
+SDL_Texture* resultTexture = nullptr;
+
 // Main loop
+enum class State {
+  SHOW_QUESTION,
+  SHOW_RESULT
+};
+
+State state = State::SHOW_QUESTION;
 bool running = true;
 while (running) {
   // Process input
@@ -221,18 +231,28 @@ while (running) {
     } else if (event.type == SDL_MOUSEBUTTONDOWN) {
       int x = event.button.x;
       int y = event.button.y;
-      for (int i = 0; i < buttonRects.size(); i++) {
-        if (x >= buttonRects[i].x && x < buttonRects[i].x + buttonRects[i].w && y >= buttonRects[i].y && y < buttonRects[i].y + buttonRects[i].h) {
-          // Button i was clicked
-          if (choices[i] == answers[currentQuestion]) {
-            score++;
+      if (state == State::SHOW_QUESTION) {
+        for (int i = 0; i < buttonRects.size(); i++) {
+          if (x >= buttonRects[i].x && x < buttonRects[i].x + buttonRects[i].w && y >= buttonRects[i].y && y < buttonRects[i].y + buttonRects[i].h) {
+            // Button i was clicked
+            if (choices[i] == answers[currentQuestion]) {
+              score++;
+              resultText = "Correct!";
+            } else {
+              resultText = "Wrong!";
+            }
+            state = State::SHOW_RESULT;
+            break;
           }
-          currentQuestion++;
-          if (currentQuestion >= questions.size()) {
-            // End of quiz
-            running = false;
-          }
-          break;
+        }
+      } else if (state == State::SHOW_RESULT) {
+        // Move on to the next question
+        currentQuestion++;
+        if (currentQuestion >= questions.size()) {
+          // End of quiz
+          running = false;
+        } else {
+          state = State::SHOW_QUESTION;
         }
       }
     }
@@ -261,30 +281,43 @@ while (running) {
   SDL_RenderCopy(renderer, scoreTexture, nullptr, &scoreRect);
   SDL_DestroyTexture(scoreTexture);
 
+if (state == State::SHOW_QUESTION) {
 // Draw the question
-  std::string questionText = questions[currentQuestion];
-  SDL_Surface* questionSurface = TTF_RenderText_Solid(font, questionText.c_str(), color);
-  SDL_Texture* questionTexture = SDL_CreateTextureFromSurface(renderer, questionSurface);
-  SDL_FreeSurface(questionSurface);
-  SDL_Rect questionRect;
-  questionRect.x = 10;
-  questionRect.y = 50;
-  questionRect.w = questionSurface->w;
-  questionRect.h = questionSurface->h;
-  SDL_RenderCopy(renderer, questionTexture, nullptr, &questionRect);
-  SDL_DestroyTexture(questionTexture);
+    std::string questionText = questions[currentQuestion];
+    SDL_Surface* questionSurface = TTF_RenderText_Solid(font, questionText.c_str(), color);
+    SDL_Texture* questionTexture = SDL_CreateTextureFromSurface(renderer, questionSurface);
+    SDL_FreeSurface(questionSurface);
+    SDL_Rect questionRect;
+    questionRect.x = 10;
+    questionRect.y = 50;
+    questionRect.w = questionSurface->w;
+    questionRect.h = questionSurface->h;
+    SDL_RenderCopy(renderer, questionTexture, nullptr, &questionRect);
+    SDL_DestroyTexture(questionTexture);
 
-  // Draw the buttons
-  for (int i = 0; i < choices.size(); i++) {
-    std::string buttonText = choices[i];
-    SDL_Surface* buttonSurface = TTF_RenderText_Solid(font, buttonText.c_str(), color);
-    SDL_Texture* buttonTexture = SDL_CreateTextureFromSurface(renderer, buttonSurface);
-    SDL_FreeSurface(buttonSurface);
-    SDL_Rect buttonRect = buttonRects[i];
-    buttonRect.w = buttonSurface->w;
-    buttonRect.h = buttonSurface->h;
-    SDL_RenderCopy(renderer, buttonTexture, nullptr, &buttonRect);
-    SDL_DestroyTexture(buttonTexture);
+    // Draw the buttons
+    for (int i = 0; i < choices.size(); i++) {
+        std::string buttonText = choices[i];
+        SDL_Surface* buttonSurface = TTF_RenderText_Solid(font, buttonText.c_str(), color);
+        SDL_Texture* buttonTexture = SDL_CreateTextureFromSurface(renderer, buttonSurface);
+        SDL_FreeSurface(buttonSurface);
+        SDL_Rect buttonRect = buttonRects[i];
+        buttonRect.w = buttonSurface->w;
+        buttonRect.h = buttonSurface->h;
+        SDL_RenderCopy(renderer, buttonTexture, nullptr, &buttonRect);
+        SDL_DestroyTexture(buttonTexture);
+    }
+  } else if (state == State::SHOW_RESULT) {
+    // Draw the result
+    SDL_Surface* resultSurface = TTF_RenderText_Solid(font, resultText.c_str(), color);
+    resultTexture = SDL_CreateTextureFromSurface(renderer, resultSurface);
+    SDL_FreeSurface(resultSurface);
+    SDL_Rect resultRect;
+    resultRect.x = 10;
+    resultRect.y = 50;
+    resultRect.w = resultSurface->w;
+    resultRect.h = resultSurface->h;
+    SDL_RenderCopy(renderer, resultTexture, nullptr, &resultRect);
   }
 
   // Update the screen
