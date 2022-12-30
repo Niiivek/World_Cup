@@ -7,6 +7,7 @@
                 "/opt/homebrew/opt/sdl2/include",
                 "/opt/homebrew/opt/sdl2_image/include",
                 "/opt/homebrew/opt/sdl2_ttf/include",
+                "/opt/homebrew/opt/sdl2_mixer/include",
                 "/opt/homebrew/Cellar/sdl2/2.26.1/include/SDL2"
             ],
             "defines": [],

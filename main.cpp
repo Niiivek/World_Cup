@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 #include "Box.hpp"
 #include "Box_teams.hpp"
 #include "Box_others.hpp"
@@ -143,7 +144,9 @@ int main() {
 
 }*/
 
+void quizz(Box pays){
 
+}
 int main(int argc, char* argv[]) {
   // Initialize SDL2
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -214,6 +217,19 @@ for (int i = 0; i < choices.size(); i++) {
 std::string resultText;
 SDL_Texture* resultTexture = nullptr;
 
+// Set up the audio device
+int audio_rate = 22050;
+Uint16 audio_format = AUDIO_S16SYS;
+int audio_channels = 2;
+int audio_buffers = 4096;
+if (Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) != 0) {
+  std::cerr << "Error opening audio device: " << Mix_GetError() << std::endl;
+  return 1;
+}
+
+// Load the sound effect for correct answers
+Mix_Chunk* correctSound = Mix_LoadWAV("IHoqpnFWqJn_VEGEDREAM---RAMENEZ-LA-COUPE-A-LA-MAISON.mp3");
+
 // Main loop
 enum class State {
   SHOW_QUESTION,
@@ -238,6 +254,7 @@ while (running) {
             if (choices[i] == answers[currentQuestion]) {
               score++;
               resultText = "Correct!";
+              Mix_PlayChannel(-1, correctSound, 0);
             } else {
               resultText = "Wrong!";
             }
@@ -252,6 +269,9 @@ while (running) {
           // End of quiz
           running = false;
         } else {
+          if(currentQuestion==1){
+            choices = {"Euro", "Won", "Yen"};
+          }
           state = State::SHOW_QUESTION;
         }
       }
