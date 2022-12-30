@@ -49,85 +49,6 @@ vector<vector<string> > read_csv(string csv){
 /*
 
 int main() {
-    int x=0;
-    if(x==0){
-    // Initialize SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
-    {
-        // Handle error
-        std::cout << "SDL_Init() failed: " << SDL_GetError() << std::endl;
-        return 1;
-    }
-    // Initialize SDL_image
-    int imgFlags = IMG_INIT_PNG;
-    if (!(IMG_Init(imgFlags) & imgFlags))
-    {
-        // Handle error
-        std::cout << "IMG_Init() failed: " << IMG_GetError() << std::endl;
-        SDL_Quit();
-        return 1;
-    }
-
-    // Create the game window
-    SDL_Window* window = SDL_CreateWindow("Board Game",
-                              SDL_WINDOWPOS_UNDEFINED,
-                              SDL_WINDOWPOS_UNDEFINED,
-                              SCREEN_WIDTH,
-                              SCREEN_HEIGHT,
-                              SDL_WINDOW_SHOWN);
-
-    // Check if the window was created successfully
-    if (window == NULL)
-    {
-        std::cout << "SDL_CreateWindow() failed: " << SDL_GetError() << std::endl;
-        SDL_Quit();
-        return 1;
-    }
-
-    // Create a renderer
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED| SDL_RENDERER_PRESENTVSYNC);
-
-    // Check if the renderer was created successfully
-    if (renderer == NULL)
-    {
-        std::cout << "SDL_CreateRenderer() failed: " << SDL_GetError() << std::endl;
-        SDL_DestroyWindow(window);
-        SDL_Quit();
-        return 1;
-    }
-    SDL_Surface* imageSurface = IMG_Load("image/Monopoly.jpg");
-    SDL_Texture* imageTexture = SDL_CreateTextureFromSurface(renderer,imageSurface);
-
-    SDL_Event e;
-    bool end=true;
-    while(end!=false){
-       while(SDL_PollEvent(&e)){
-            switch(e.type){
-            case SDL_QUIT:
-                break;
-            
-            case SDL_MOUSEBUTTONDOWN:
-                end=false;
-                break;
-            default: {}
-            }
-        }
-        SDL_SetRenderDrawColor(renderer, 0,0,0,255);
-        SDL_RenderClear(renderer);
-        SDL_RenderCopy(renderer, imageTexture, NULL, NULL);
-        SDL_RenderPresent(renderer);
-    }
-
-    // Destroy the window and the renderer
-    SDL_DestroyTexture(imageTexture);
-    SDL_FreeSurface(imageSurface);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-
-    // Quit the SDL library
-    SDL_Quit();
-    }
-    
     Boss_team Case1("chine","comment vas tu",10);
     Normal_team Case2("france","hi",5);
     Lucky_box Case3("Chance","Tu est qualifié à la phase suivante");
@@ -148,6 +69,9 @@ void quizz(Box pays){
 
 }
 int main(int argc, char* argv[]) {
+  /*vector <vector<string> > content=read_csv("team_q.csv");
+  Boss_team Case1(content[1][0],content[1][2],content[1][3],content[1][4],content[1][5],content[1][3],5);
+  Case1.affiche();*/
   // Initialize SDL2
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
     std::cerr << "Error initializing SDL2: " << SDL_GetError() << std::endl;
@@ -196,8 +120,8 @@ if (font == nullptr) {
   }
 
  // Set up the quiz questions and answers
-std::vector<std::string> questions = {"What is the capital of France?", "What is the currency of Japan?"};
-std::vector<std::string> answers = {"Paris", "Yen"};
+std::vector<std::string> questions = {"What is the capital of France?", "What is the currency of South Korea?"};
+std::vector<std::string> answers = {"Paris", "Won"};
 int currentQuestion = 0;
 int score = 0;
 
@@ -228,7 +152,7 @@ if (Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) != 0)
 }
 
 // Load the sound effect for correct answers
-Mix_Chunk* correctSound = Mix_LoadWAV("IHoqpnFWqJn_VEGEDREAM---RAMENEZ-LA-COUPE-A-LA-MAISON.mp3");
+Mix_Chunk* correctSound = Mix_LoadWAV("song/IHoqpnFWqJn_VEGEDREAM---RAMENEZ-LA-COUPE-A-LA-MAISON.mp3");
 
 // Main loop
 enum class State {
@@ -263,15 +187,18 @@ while (running) {
           }
         }
       } else if (state == State::SHOW_RESULT) {
+        // Stop the sound effect
+        Mix_HaltChannel(-1);
         // Move on to the next question
         currentQuestion++;
         if (currentQuestion >= questions.size()) {
           // End of quiz
           running = false;
         } else {
-          if(currentQuestion==1){
+            if(currentQuestion==1){
             choices = {"Euro", "Won", "Yen"};
-          }
+            correctSound= Mix_LoadWAV("song/bts.mp3");
+            } 
           state = State::SHOW_QUESTION;
         }
       }
@@ -345,6 +272,9 @@ if (state == State::SHOW_QUESTION) {
 }
 
 // Clean up
+TTF_CloseFont(font);
+Mix_FreeChunk(correctSound);
+Mix_CloseAudio();
 SDL_DestroyTexture(texture);
 SDL_DestroyRenderer(renderer);
 SDL_DestroyWindow(window);
