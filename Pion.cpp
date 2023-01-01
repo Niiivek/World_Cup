@@ -1,4 +1,4 @@
-#include "Pion.hpp"
+#include "Headers/Pion.hpp"
 
 Pion::Pion(string n):name(n){
     score=0;
@@ -15,4 +15,8 @@ void Pion::augmenter_score(int high){
 
 void Pion::diminuer_score(int lower){
     score-=lower;
+}
+
+int Pion::get_score(){
+    return score;
 }

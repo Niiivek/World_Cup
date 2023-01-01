@@ -17,7 +17,7 @@ $(EXEC): $(OBJ)
 	$(CC) $(LIBFLAGS) $(CCFLAGS) -o $@ -c $<
 
 .depend:
-	g++ $(CCFLAGS) $(LIBFLAGS) -MM $(SRC) > .depends
+	$(CC) $(CCFLAGS) $(LIBFLAGS) -MM $(SRC) > .depends
 
 clean:
 	rm -f $(OBJ) $(EXEC)

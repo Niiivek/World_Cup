@@ -13,6 +13,7 @@ public:
     void deplacement(int move);
     void augmenter_score(int high);
     void diminuer_score(int lower);
+    int get_score();
     //Variables
     string name;
     int indice;
