@@ -5,6 +5,10 @@ using namespace std;
 #include <list>
 #include <vector>
 #include <map>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 
 class Box{
 public:
@@ -21,6 +25,7 @@ public:
     void affiche() override{cout <<"hi2"<<endl;} 
     string getQ();
     string getC();
+    vector <string> getChoices();
     string getC1();
     string getC2();
     string getC3();
@@ -28,9 +33,7 @@ public:
 protected: 
     string categorie;
     string question;
-    string choix1;
-    string choix2;
-    string choix3;
+    vector<string> choices;
     string reponse;
     int score;
 };

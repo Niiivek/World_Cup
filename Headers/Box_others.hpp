@@ -6,6 +6,10 @@ using namespace std;
 #include <list>
 #include <vector>
 #include <map>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 
 class Empty_box: public Box{
 public:

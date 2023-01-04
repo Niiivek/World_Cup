@@ -45,9 +45,9 @@ void Graphic::Init(){
   }
 }
 
-void Graphic::Load_image(){
+void Graphic::load_image(){
     // Load an image
-    image = IMG_Load("image/white.jpg");
+    image = IMG_Load("image/football.png");
     if (image == nullptr) {
         cerr << "Error loading image: " << IMG_GetError() << endl;
         exit(EXIT_FAILURE);	
@@ -68,7 +68,7 @@ void Graphic::Draw_question(){
     SDL_Texture* questionTexture = SDL_CreateTextureFromSurface(renderer, questionSurface);
     SDL_FreeSurface(questionSurface);
     SDL_Rect questionRect;
-    questionRect.x = 10;
+    questionRect.x = 50;
     questionRect.y = 50;
     questionRect.w = questionSurface->w;
     questionRect.h = questionSurface->h;
@@ -97,7 +97,7 @@ void Graphic::Draw_result(string resultText,SDL_Texture* resultTexture){
     resultTexture = SDL_CreateTextureFromSurface(renderer, resultSurface);
     SDL_FreeSurface(resultSurface);
     SDL_Rect resultRect;
-    resultRect.x = 10;
+    resultRect.x = 50;
     resultRect.y = 50;
     resultRect.w = resultSurface->w;
     resultRect.h = resultSurface->h;
@@ -111,7 +111,7 @@ void Graphic::Draw_score(Pion joueur){
     SDL_Texture* scoreTexture = SDL_CreateTextureFromSurface(renderer, scoreSurface);
     SDL_FreeSurface(scoreSurface);
     SDL_Rect scoreRect;
-    scoreRect.x = 10;
+    scoreRect.x = 50;
     scoreRect.y = 10;
     scoreRect.w = scoreSurface->w;
     scoreRect.h = scoreSurface->h;
@@ -131,7 +131,7 @@ void Graphic::clean_screen(){
 void Graphic::init_quiz(Box_team pays){
     question=pays.getQ();
     answer=pays.getR();
-    choices={pays.getC1(),pays.getC2(),pays.getC3()};
+    choices=pays.getChoices();
     for (int i = 0; i < choices.size(); i++) {
         SDL_Rect rect;
         rect.x = 50;
@@ -142,7 +142,7 @@ void Graphic::init_quiz(Box_team pays){
     }
 }
 
-void Graphic::quiz_loop(Pion joueur){
+void Graphic::quiz_loop(Pion joueur,Box_team pays){
     string resultText;
     SDL_Texture* resultTexture = nullptr;
     State state = State::SHOW_QUESTION;
@@ -159,7 +159,7 @@ void Graphic::quiz_loop(Pion joueur){
                     for (int i = 0; i < buttonRects.size(); i++) {
                         if (x >= buttonRects[i].x && x < buttonRects[i].x + buttonRects[i].w && y >= buttonRects[i].y && y < buttonRects[i].y + buttonRects[i].h) {
                         // Button i was clicked
-                            if (choices[i] == answer) {
+                            if (pays.getChoices()[i] == pays.getR()) {
                                 joueur.augmenter_score(1);
                                 resultText = "Correct!";
                             }else{
