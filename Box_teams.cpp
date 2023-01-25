@@ -1,25 +1,25 @@
 #include "Headers/Box_teams.hpp"
 
-Boss_team::Boss_team(string pays,string q,string r,string c1,string c2, string c3,int s){
+Boss_team::Boss_team(string pays,string q,string r,string c1,string c2, string c3){
     name=pays;
     categorie="boss";
     question=q;
     choices={c1,c2,c3};
     reponse=r;
-    score=s;
+    score=5;
 }
 
 void Boss_team::affiche(){
     cout<<name<<" "<<categorie<< " "<<question<<" "<<reponse<<" "<<choices[0]<<" "<<choices[1]<<" "<<choices[2]<<endl;
 }
 
-Normal_team::Normal_team(string pays,string q,string r,string c1,string c2, string c3,int s){
+Normal_team::Normal_team(string pays,string q,string r,string c1,string c2, string c3){
     name=pays;
     categorie="normal";
     question=q;
     choices={c1,c2,c3};
     reponse=r;
-    score=s;
+    score=2;
 }
 
 void Normal_team::affiche(){
@@ -48,4 +48,8 @@ string Box_team::getC3(){
 
 string Box_team::getR(){
     return reponse;
+}
+
+int Box_team::getScore(){
+    return score;
 }

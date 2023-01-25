@@ -29,7 +29,7 @@ public:
     void Draw_buttons();
     void Draw_result(string resultText,SDL_Texture* resultTexture);
     void Draw_score(Pion joueur);
-    void quiz_loop(Pion joueur,Box_team pays);
+    void quiz_loop(Pion & joueur,Box_team pays);
     void update_screen();
     void clean_screen();
 private:

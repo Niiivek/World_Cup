@@ -4,6 +4,7 @@ Pion::Pion(string n):name(n){
     score=0;
     x=0;
     y=0;
+    indice=0;
 }
 
 void Pion::deplacement(int move,int limit_x,int limit_y){   
@@ -34,6 +35,10 @@ void Pion::deplacement(int move,int limit_x,int limit_y){
     }
 }
 
+void Pion::augmenter_indice(int move){
+    indice+=move;
+}
+
 void Pion::augmenter_score(int high){
     score+=high;
 }
@@ -46,10 +51,23 @@ int Pion::get_score(){
     return score;
 }
 
+int Pion::get_indice(){
+    return indice;
+}
+
 int Pion::get_x(){
     return x;
 }
 
 int Pion::get_y(){
     return y;
+}
+
+string Pion::get_name(){
+    return name;
+}
+
+ostream& operator<<(ostream& os, const Pion& pion){
+    os << pion.name << " x:" << pion.x << " y:" << pion.y << " score:" << pion.score << " indice:" << pion.indice<<endl;
+    return os;
 }

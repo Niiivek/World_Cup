@@ -30,6 +30,7 @@ public:
     string getC2();
     string getC3();
     string getR();
+    int getScore();
 protected: 
     string categorie;
     string question;

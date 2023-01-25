@@ -8,7 +8,6 @@ Graphic::~Graphic(){
     SDL_DestroyTexture(texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-    SDL_Quit();
 }
 
 void Graphic::Init(){
@@ -105,6 +104,7 @@ void Graphic::Draw_result(string resultText,SDL_Texture* resultTexture){
 }
 
 void Graphic::Draw_score(Pion joueur){
+    //cout<< joueur.get_score()<<endl;
     string scoreText = "Score: " + to_string(joueur.get_score());
     SDL_Color color = {0, 0, 0, 0};
     SDL_Surface* scoreSurface = TTF_RenderText_Solid(font, scoreText.c_str(), color);
@@ -142,7 +142,7 @@ void Graphic::init_quiz(Box_team pays){
     }
 }
 
-void Graphic::quiz_loop(Pion joueur,Box_team pays){
+void Graphic::quiz_loop(Pion & joueur,Box_team pays){
     string resultText;
     SDL_Texture* resultTexture = nullptr;
     State state = State::SHOW_QUESTION;
@@ -160,7 +160,7 @@ void Graphic::quiz_loop(Pion joueur,Box_team pays){
                         if (x >= buttonRects[i].x && x < buttonRects[i].x + buttonRects[i].w && y >= buttonRects[i].y && y < buttonRects[i].y + buttonRects[i].h) {
                         // Button i was clicked
                             if (pays.getChoices()[i] == pays.getR()) {
-                                joueur.augmenter_score(1);
+                                joueur.augmenter_score(pays.getScore());
                                 resultText = "Correct!";
                             }else{
                                 resultText = "Wrong!";

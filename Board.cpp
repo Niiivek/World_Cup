@@ -2,7 +2,8 @@
 
 Board::Board(string csv,int nb_cases){
     content=read_csv(csv);
-    tab=random(nb_cases,content.size());
+    cout <<content.size()<<endl;
+    tab=random(nb_cases,content.size()-1);
     for(int i=0;i<nb_cases;i++){
         board.push_back(content[tab[i]][0]);
     }
@@ -42,9 +43,9 @@ vector <int> Board::random(int n,int max){
     vector <int> tab;
     int aleatoire=0;
     for(int i=0;i<n;i++){
-        aleatoire=rand()%max;
+        aleatoire=rand()%max+1;
         while(appartient(aleatoire,tab)==-1){
-                aleatoire=rand()%max;
+                aleatoire=rand()%max+1;
             }
         tab.push_back(aleatoire);
     }return tab;
@@ -70,4 +71,11 @@ vector <string> Board::getBoard(){
 
 vector <int> Board::getRandom(){
     return tab;
+}
+
+ostream& operator<<(ostream& os, const Board& plateau){
+    for(int i=0;i<plateau.board.size();i++){
+        os << plateau.board[i]<< " ";
+    }os <<endl;
+    return os;
 }
