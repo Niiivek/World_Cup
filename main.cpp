@@ -102,7 +102,7 @@ int main(int argc, char* argv[]) {
   SDL_Init(SDL_INIT_VIDEO);
   SDL_Color color = {0, 0, 0, 0}; // Black
   // Create the window and renderer
-  SDL_Window* window = SDL_CreateWindow("Board Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+  SDL_Window* window = SDL_CreateWindow("World cup Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
   SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
    // Load an image
   SDL_Surface* image = IMG_Load("image/F.png");
@@ -180,7 +180,7 @@ if (font == nullptr) {
         }
       }
     }
-    string diceText="Lancer le de";
+    string diceText="Appuie pour lancer le de";
     SDL_Surface* diceSurface = TTF_RenderText_Solid(font, diceText.c_str(), color);
     SDL_Texture* diceTexture = SDL_CreateTextureFromSurface(renderer, diceSurface);
     SDL_FreeSurface(diceSurface);
