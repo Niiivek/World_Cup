@@ -46,7 +46,7 @@ void Graphic::Init(){
 
 void Graphic::load_image(){
     // Load an image
-    image = IMG_Load("image/football.png");
+    image = IMG_Load("image/F.png");
     if (image == nullptr) {
         cerr << "Error loading image: " << IMG_GetError() << endl;
         exit(EXIT_FAILURE);	

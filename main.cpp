@@ -91,8 +91,8 @@ int main(int argc, char* argv[]) {
     vector <vector<string> > content=read_csv("team_q.csv");
   Board Plateau("team_q.csv",16);
   Plateau.affiche_random();
-  Pion joueur1("momo");
-  Pion joueur2("kev");
+  Pion joueur1("Joueur 1");
+  Pion joueur2("Joueur 2");
   cout<<Plateau<<endl;
   /*for(int i=0;i<32;i++){
     lance_quiz(WINDOW_WIDTH,WINDOW_HEIGHT,joueur,Plateau.getRandom()[i],content);
@@ -105,7 +105,7 @@ int main(int argc, char* argv[]) {
   SDL_Window* window = SDL_CreateWindow("Board Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
   SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
    // Load an image
-  SDL_Surface* image = IMG_Load("image/football.png");
+  SDL_Surface* image = IMG_Load("image/F.png");
   if (image == nullptr) {
     cerr << "Error loading image: " << IMG_GetError() << endl;
     return 1;
@@ -124,7 +124,7 @@ if (TTF_Init() != 0) {
   return 1;
 }
 // Load the pawn image
-  SDL_Surface* pawnImage = IMG_Load("image/pawn.png");
+  SDL_Surface* pawnImage = IMG_Load("image/pion.png.jpeg");
   if (pawnImage == nullptr) {
     cerr << "Error loading image: " << IMG_GetError() << endl;
     return 1;
@@ -159,7 +159,7 @@ enum class Turn {
 
 Turn turn=Turn::PLAYER_1;
 // Load a font
-TTF_Font* font = TTF_OpenFont("arial.ttf", 24);
+TTF_Font* font = TTF_OpenFont("arial.ttf", 27);
 if (font == nullptr) {
   cerr << "Error loading font: " << TTF_GetError() << endl;
   return 1;
