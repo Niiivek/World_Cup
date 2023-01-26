@@ -23,23 +23,24 @@ L'objectif est d'avoir le maximum de points à la fin du jeu pour remporter la p
 La partie graphique du projet repose sur la bibliothèque graphique SDL2.
 Pour télécharger la librairie SDL2 sous Ubuntu:
 
-#sudo apt install libsdl2-dev libsdl2-ttf-dev  libsdl2-mixer-dev
+sudo apt install libsdl2-dev libsdl2-ttf-dev  libsdl2-mixer-dev
 
 Pour télécharger la librairie SDL2 sous Ubuntu:
 
-#brew install SDL2 SDL2_image SDL2_ttf SDL2_mixer
+brew install SDL2 SDL2_image SDL2_ttf SDL2_mixer
 
 
 
 
 ## Utilisation
 
-Pour compiler le programme : 
-#make
+Pour compiler le programme :
+
+make
 
 Pour lancer une partie:
 
-#./test
+./test
 
 
 
