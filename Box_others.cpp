@@ -1,7 +1,7 @@
 #include "Headers/Box_others.hpp"
 
 Lucky_box::Lucky_box(){
-    effet=rand()%6;
+    effet=rand()%6+1;
     name="Chance";
 }
 
