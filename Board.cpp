@@ -2,7 +2,7 @@
 
 Board::Board(string csv,int nb_cases){
     content=read_csv(csv);
-    cout <<content.size()<<endl;
+    //cout <<content.size()<<endl;
     tab=random(nb_cases,content.size()-1);
     for(int i=0;i<nb_cases;i++){
         board.push_back(content[tab[i]][0]);

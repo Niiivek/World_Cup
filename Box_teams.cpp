@@ -7,6 +7,7 @@ Boss_team::Boss_team(string pays,string q,string r,string c1,string c2, string c
     choices={c1,c2,c3};
     reponse=r;
     score=5;
+    malus=2;
 }
 
 void Boss_team::affiche(){
@@ -20,6 +21,7 @@ Normal_team::Normal_team(string pays,string q,string r,string c1,string c2, stri
     choices={c1,c2,c3};
     reponse=r;
     score=2;
+    malus=1;
 }
 
 void Normal_team::affiche(){
@@ -52,4 +54,8 @@ string Box_team::getR(){
 
 int Box_team::getScore(){
     return score;
+}
+
+int Box_team::getMalus(){
+    return malus;
 }

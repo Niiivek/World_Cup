@@ -38,8 +38,7 @@ vector<vector<string> > read_csv(string csv){
                 content.push_back(row);
             }
         }
-    }else
-        cout<<"fichier pas ouvert \n";
+    }
     return content;
 }
 
@@ -68,6 +67,8 @@ int convert_board(int x){
     return 8;
   return x;
 }
+
+
 void lance_quiz(int width,int height,Pion& joueur,int pays,vector <vector<string> > content){
   if(content[pays][1]=="Boss"){
     Boss_team Case1(content[pays][0],content[pays][2],content[pays][3],content[pays][4],content[pays][5],content[pays][6]);
@@ -90,10 +91,10 @@ int main(int argc, char* argv[]) {
     srand(time(NULL));
     vector <vector<string> > content=read_csv("team_q.csv");
   Board Plateau("team_q.csv",16);
-  Plateau.affiche_random();
+  //Plateau.affiche_random();
   Pion joueur1("Joueur 1");
   Pion joueur2("Joueur 2");
-  cout<<Plateau<<endl;
+  //cout<<Plateau<<endl;
   /*for(int i=0;i<32;i++){
     lance_quiz(WINDOW_WIDTH,WINDOW_HEIGHT,joueur,Plateau.getRandom()[i],content);
   }*/
@@ -136,26 +137,24 @@ if (TTF_Init() != 0) {
     cerr << "Error creating texture: " << SDL_GetError() << endl;
     return 1;
   }
-
+  // Set up the audio device
+  int audio_rate = 22050;
+  Uint16 audio_format = AUDIO_S16SYS;
+  int audio_channels = 2;
+  int audio_buffers = 4096;
+  if (Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) != 0) {
+    cerr << "Error opening audio device: " << Mix_GetError() << endl;
+  }
+  // Load the sound effect for correct answers
+  Mix_Chunk* correctSound = Mix_LoadWAV("song/IHoqpnFWqJn_VEGEDREAM---RAMENEZ-LA-COUPE-A-LA-MAISON.mp3");
   // Initialize the position of the pawn
   int deplacement=0;
-
-  // Set up the audio device
-int audio_rate = 22050;
-Uint16 audio_format = AUDIO_S16SYS;
-int audio_channels = 2;
-int audio_buffers = 4096;
-if (Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) != 0) {
-  cerr << "Error opening audio device: " << Mix_GetError() << endl;
-  return 1;
-}
-// Load the sound effect for correct answers
-Mix_Chunk* correctSound = Mix_LoadWAV("song/IHoqpnFWqJn_VEGEDREAM---RAMENEZ-LA-COUPE-A-LA-MAISON.mp3");
-
 enum class Turn {
     PLAYER_1,
-    PLAYER_2
+    PLAYER_2,
+    VICTORY
 };
+string winner;
 
 Turn turn=Turn::PLAYER_1;
 // Load a font
@@ -200,30 +199,42 @@ if (font == nullptr) {
       }else if (event.type == SDL_MOUSEBUTTONDOWN) {
         int x = event.button.x;
         int y = event.button.y;
+        if((joueur1.get_score()>=2 || joueur2.get_score()>=2) && turn!=Turn::VICTORY){
+          if(joueur1.get_score()>=2){
+            winner=joueur1.get_name();
+          }else{
+            winner=joueur2.get_name();
+          }
+          Mix_PlayChannel(-1, correctSound, 0);
+          image = IMG_Load("image/france.jpeg");
+          texture = SDL_CreateTextureFromSurface(renderer, image);
+          turn=Turn::VICTORY;
+      }else{
         if(turn==Turn::PLAYER_1){
           if(x>=diceRect.x && x<diceRect.x+diceRect.w && y >= diceRect.y && y < diceRect.y + diceRect.h){
             deplacement=rand()%3+1;
+            cout<<"Le dé est tombé sur "+ to_string(deplacement)<<endl;
             joueur1.deplacement(deplacement,NUM_ROWS,NUM_COLS);
-            joueur1.augmenter_indice(deplacement);
-            cout<<"here "<<deplacement<<endl;
+            joueur1.augmenter_indice(deplacement,15);
+            //cout<<joueur1.get_indice()<<"here "<<deplacement<<endl;
             lance_quiz(WINDOW_WIDTH,WINDOW_HEIGHT,joueur1,Plateau.getRandom()[joueur1.get_indice()],content);
-            cout<<" "<<Plateau.getRandom()[joueur1.get_indice()]<<" "<<endl;
-            cout<<joueur1 <<endl;;
-            Mix_PlayChannel(-1, correctSound, 0);
+            //cout<<" "<<Plateau.getRandom()[joueur1.get_indice()]<<" "<<endl;
+            //cout<<joueur1 <<endl;;
             turn=Turn::PLAYER_2;
           }
-        }else{
+        }else if(turn==Turn::PLAYER_2){
           if(x>=diceRect.x && x<diceRect.x+diceRect.w && y >= diceRect.y && y < diceRect.y + diceRect.h){
           deplacement=rand()%3+1;
+          cout<<"Le dé est tombé sur "+ to_string(deplacement)<<endl;
           joueur2.deplacement(deplacement,NUM_ROWS,NUM_COLS);
-          joueur2.augmenter_indice(deplacement);
-          cout<<"here "<<deplacement<<endl;
-          lance_quiz(WINDOW_WIDTH,WINDOW_HEIGHT,joueur2,Plateau.getRandom()[joueur2.get_indice()],content);
-          cout<<" "<<Plateau.getRandom()[joueur2.get_indice()]<<" "<<endl;
-          cout<<joueur2<<endl;
-          Mix_PlayChannel(-1, correctSound, 0);
+          joueur2.augmenter_indice(deplacement,15);
+          //cout<<joueur2.get_indice()<<"here "<<deplacement<<endl;
+          //lance_quiz(WINDOW_WIDTH,WINDOW_HEIGHT,joueur2,Plateau.getRandom()[joueur2.get_indice()],content);
+          //cout<<" "<<Plateau.getRandom()[joueur2.get_indice()]<<" "<<endl;
+          //cout<<joueur2<<endl;
           turn=Turn::PLAYER_1;
           }
+        }
         }
       }
     }
@@ -234,7 +245,7 @@ if (font == nullptr) {
   SDL_RenderCopy(renderer, texture, NULL, NULL);
 
   // Draw the pawn
-  
+    if(turn!=Turn::VICTORY){
     SDL_Rect pawnRect;
     pawnRect.x = joueur1.get_x()* WINDOW_WIDTH/5+100;
     pawnRect.y = joueur1.get_y()* WINDOW_HEIGHT/5+25;
@@ -309,13 +320,27 @@ if (font == nullptr) {
     scoreRect2.h = scoreSurface2->h;
     SDL_RenderCopy(renderer, scoreTexture2, nullptr, &scoreRect2);
     SDL_DestroyTexture(scoreTexture2);
+    }else{
+      //Draw the scores
+      string WinnerText =winner+" a gagne la partie !!!!!!!";
+    SDL_Surface* WinnerSurface = TTF_RenderText_Solid(font, WinnerText.c_str(), color);
+    SDL_Texture* WinnerTexture = SDL_CreateTextureFromSurface(renderer, WinnerSurface);
+    SDL_FreeSurface(WinnerSurface);
+    SDL_Rect WinnerRect;
+    WinnerRect.x = WINDOW_WIDTH/10;
+    WinnerRect.y = WINDOW_HEIGHT/10;
+    WinnerRect.w = WinnerSurface->w+400;
+    WinnerRect.h = WinnerSurface->h;
+    SDL_RenderCopy(renderer, WinnerTexture, nullptr, &WinnerRect);
+    SDL_DestroyTexture(WinnerTexture);
+    }
     // Present the renderer to the window
     SDL_RenderPresent(renderer);
   }
 
   // Clean up
   Mix_FreeChunk(correctSound);
-Mix_CloseAudio();
+  Mix_CloseAudio();
   SDL_DestroyTexture(diceTexture);
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);

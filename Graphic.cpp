@@ -163,6 +163,7 @@ void Graphic::quiz_loop(Pion & joueur,Box_team pays){
                                 joueur.augmenter_score(pays.getScore());
                                 resultText = "Correct!";
                             }else{
+                                joueur.diminuer_score(pays.getMalus());
                                 resultText = "Wrong!";
                             }
                             state = State::SHOW_RESULT;

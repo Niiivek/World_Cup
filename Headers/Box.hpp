@@ -31,12 +31,14 @@ public:
     string getC3();
     string getR();
     int getScore();
+    int getMalus();
 protected: 
     string categorie;
     string question;
     vector<string> choices;
     string reponse;
     int score;
+    int malus;
 };
 
 

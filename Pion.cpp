@@ -35,8 +35,16 @@ void Pion::deplacement(int move,int limit_x,int limit_y){
     }
 }
 
-void Pion::augmenter_indice(int move){
-    indice+=move;
+void Pion::augmenter_indice(int move, int indice_limit){
+    if(indice+move>indice_limit){
+        while(indice!=indice_limit){
+            indice++;
+            move--;
+        }indice=-1;
+        indice+=move;
+    }else{
+        indice+=move;
+    }
 }
 
 void Pion::augmenter_score(int high){

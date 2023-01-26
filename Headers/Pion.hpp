@@ -15,7 +15,7 @@ class Pion{
 public:
     Pion(string n);
     void deplacement(int move,int limit_x,int limit_y);
-    void augmenter_indice(int move);
+    void augmenter_indice(int move,int indice_limit);
     void augmenter_score(int high);
     void diminuer_score(int lower);
     int get_score();
