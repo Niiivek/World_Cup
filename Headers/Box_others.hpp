@@ -1,6 +1,7 @@
 #pragma once
 #include<string>
 #include<iostream>
+#include <time.h>
 using namespace std;
 #include "Box.hpp"
 #include <list>
@@ -11,17 +12,12 @@ using namespace std;
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 
-class Empty_box: public Box{
-public:
-    
-    void affiche() override;
-private:
-};
-
 class Lucky_box: public Box{
 public:
-    Lucky_box(string chance,string e);
+    Lucky_box();
+    int getEffet();
+    string getName();
     void affiche() override;
 private:
-    string effet;
+    int effet;
 };

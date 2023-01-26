@@ -94,6 +94,7 @@ int main(int argc, char* argv[]) {
   //Plateau.affiche_random();
   Pion joueur1("Joueur 1");
   Pion joueur2("Joueur 2");
+  cout<<Plateau.getLucky_indice()<<endl;
   //cout<<Plateau<<endl;
   /*for(int i=0;i<32;i++){
     lance_quiz(WINDOW_WIDTH,WINDOW_HEIGHT,joueur,Plateau.getRandom()[i],content);
@@ -106,7 +107,7 @@ int main(int argc, char* argv[]) {
   SDL_Window* window = SDL_CreateWindow("World cup Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
   SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
    // Load an image
-  SDL_Surface* image = IMG_Load("image/F.png");
+  SDL_Surface* image = IMG_Load("image/football.png");
   if (image == nullptr) {
     cerr << "Error loading image: " << IMG_GetError() << endl;
     return 1;
@@ -125,7 +126,7 @@ if (TTF_Init() != 0) {
   return 1;
 }
 // Load the pawn image
-  SDL_Surface* pawnImage = IMG_Load("image/pion.png.jpeg");
+  SDL_Surface* pawnImage = IMG_Load("image/pawn.png");
   if (pawnImage == nullptr) {
     cerr << "Error loading image: " << IMG_GetError() << endl;
     return 1;
@@ -155,7 +156,7 @@ enum class Turn {
     VICTORY
 };
 string winner;
-
+Lucky_box Chance;
 Turn turn=Turn::PLAYER_1;
 // Load a font
 TTF_Font* font = TTF_OpenFont("arial.ttf", 27);
@@ -216,6 +217,10 @@ if (font == nullptr) {
             cout<<"Le dé est tombé sur "+ to_string(deplacement)<<endl;
             joueur1.deplacement(deplacement,NUM_ROWS,NUM_COLS);
             joueur1.augmenter_indice(deplacement,15);
+            if(joueur1.get_indice()==Plateau.getLucky_indice()){
+              Chance.affiche();
+              joueur1.augmenter_score(Chance.getEffet());
+            }
             //cout<<joueur1.get_indice()<<"here "<<deplacement<<endl;
             lance_quiz(WINDOW_WIDTH,WINDOW_HEIGHT,joueur1,Plateau.getRandom()[joueur1.get_indice()],content);
             //cout<<" "<<Plateau.getRandom()[joueur1.get_indice()]<<" "<<endl;
@@ -228,6 +233,10 @@ if (font == nullptr) {
           cout<<"Le dé est tombé sur "+ to_string(deplacement)<<endl;
           joueur2.deplacement(deplacement,NUM_ROWS,NUM_COLS);
           joueur2.augmenter_indice(deplacement,15);
+          if(joueur2.get_indice()==Plateau.getLucky_indice()){
+              Chance.affiche();
+              joueur2.augmenter_score(Chance.getEffet());
+            }
           //cout<<joueur2.get_indice()<<"here "<<deplacement<<endl;
           //lance_quiz(WINDOW_WIDTH,WINDOW_HEIGHT,joueur2,Plateau.getRandom()[joueur2.get_indice()],content);
           //cout<<" "<<Plateau.getRandom()[joueur2.get_indice()]<<" "<<endl;
@@ -293,6 +302,20 @@ if (font == nullptr) {
         buttonRect.h = buttonSurface->h;
         SDL_RenderCopy(renderer, buttonTexture, nullptr, &buttonRect);
         SDL_DestroyTexture(buttonTexture);
+        if(convert_board(i)==Plateau.getLucky_indice()){
+          string buttonText =Chance.getName();
+          SDL_Surface* buttonSurface = TTF_RenderText_Solid(font, buttonText.c_str(), color);
+          SDL_Texture* buttonTexture = SDL_CreateTextureFromSurface(renderer, buttonSurface);
+          SDL_FreeSurface(buttonSurface);
+          SDL_Rect buttonRect;
+          buttonRect.x=buttonRects[i].x;
+          buttonRect.y=buttonRects[i].y+30;
+          buttonRect.w = buttonSurface->w;
+          buttonRect.h = buttonSurface->h;
+          SDL_RenderCopy(renderer, buttonTexture, nullptr, &buttonRect);
+          SDL_DestroyTexture(buttonTexture);
+
+        }
     }
     //Draw the scores
     string scoreText = "Score "+joueur1.get_name()+": " + to_string(joueur1.get_score());

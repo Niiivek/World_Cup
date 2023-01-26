@@ -6,7 +6,7 @@ Board::Board(string csv,int nb_cases){
     tab=random(nb_cases,content.size()-1);
     for(int i=0;i<nb_cases;i++){
         board.push_back(content[tab[i]][0]);
-    }
+    }lucky_indice=rand()%board.size();
 }
 
 
@@ -35,7 +35,7 @@ vector<vector<string> > Board::read_csv(string csv){
             }
         }
     }else
-        cout<<"fichier pas ouvert \n";
+        cout<<"fichier pas ouvert";
     return content;
 }
 
@@ -71,6 +71,10 @@ vector <string> Board::getBoard(){
 
 vector <int> Board::getRandom(){
     return tab;
+}
+
+int Board::getLucky_indice(){
+    return lucky_indice;
 }
 
 ostream& operator<<(ostream& os, const Board& plateau){

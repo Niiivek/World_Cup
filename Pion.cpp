@@ -9,25 +9,25 @@ Pion::Pion(string n):name(n){
 
 void Pion::deplacement(int move,int limit_x,int limit_y){   
     if(x==0){ //horizontale haute
-        cout << "horizontale haute"<<endl;
+        //cout << "horizontale haute"<<endl;
         while(y!=limit_y-1 && move!=0){
             y++;
             move--;
         }x+=move;
     }else if(x==limit_x-1){ //horizontale basse
-        cout << "horizontale basse"<<endl;
+        //cout << "horizontale basse"<<endl;
         while(y!=0 && move!=0){
             y--;
             move--;
         }x-=move;
     }else if(y==0){ //verticale gauche
-        cout << "verticale gauche"<<endl;
+        //cout << "verticale gauche"<<endl;
         while(x!=0 && move!=0){
             x--;
             move--;
         }y+=move;
     }else{//verticale droite
-        cout << "verticale droite"<<endl;
+        //cout << "verticale droite"<<endl;
         while(x!=limit_x-1 && move!=0){
             x++;
             move--;

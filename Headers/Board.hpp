@@ -28,10 +28,11 @@ public:
     void affiche_random();
     vector<string> getBoard();
     vector<int> getRandom();
+    int getLucky_indice();
     friend ostream& operator<<(ostream& os,const Board& plateau);
 private:
     vector <string> board;
     vector<vector<string> > content;
     vector <int> tab;
-
+    int lucky_indice;
 };
