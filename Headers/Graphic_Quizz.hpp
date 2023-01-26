@@ -18,17 +18,17 @@ enum class State {
     SHOW_RESULT
 };
 
-class Graphic{
+class Graphic_Quizz{
 public:
-    Graphic(int Width,int Height);
-    ~Graphic();
+    Graphic_Quizz(int Width,int Height);
+    ~Graphic_Quizz();
     void Init();
     void load_image();
     void init_quiz(Box_team pays);
-    void Draw_question();
-    void Draw_buttons();
-    void Draw_result(string resultText,SDL_Texture* resultTexture);
-    void Draw_score(Pion joueur);
+    void draw_question();
+    void draw_buttons();
+    void draw_result(string resultText,SDL_Texture* resultTexture);
+    void draw_score(Pion joueur);
     void quiz_loop(Pion & joueur,Box_team pays);
     void update_screen();
     void clean_screen();

@@ -28,6 +28,7 @@ public:
     void affiche_random();
     vector<string> getBoard();
     vector<int> getRandom();
+    vector<vector<string>> getContent();
     int getLucky_indice();
     friend ostream& operator<<(ostream& os,const Board& plateau);
 private:

@@ -73,6 +73,10 @@ vector <int> Board::getRandom(){
     return tab;
 }
 
+vector<vector<string>> Board::getContent(){
+    return content;
+}
+
 int Board::getLucky_indice(){
     return lucky_indice;
 }
