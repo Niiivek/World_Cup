@@ -22,7 +22,7 @@ La partie graphique du projet repose sur la bibliothèque graphique SDL2.
 Pour télécharger la librairie SDL2 sous Ubuntu:
 
 sudo apt-get install libsdl2-dev 
-sudo apr-get install libsdl2-ttf-dev 
+sudo apt-get install libsdl2-ttf-dev 
 sudo apt-get install libsdl2-mixer-dev
 
 Pour télécharger la librairie SDL2 sous macOS M1/M2: 
