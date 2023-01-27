@@ -1,6 +1,6 @@
 #include "Headers/Board.hpp"
 
-Board::Board(string csv,int nb_cases){
+Board::Board(string csv,int nb_cases){ // constructeur de notre plateau qui va créer des cases aléatoires à chaque fois
     content=read_csv(csv);
     //cout <<content.size()<<endl;
     tab=random(nb_cases,content.size()-1);
@@ -10,7 +10,7 @@ Board::Board(string csv,int nb_cases){
 }
 
 
-vector<vector<string> > Board::read_csv(string csv){
+vector<vector<string> > Board::read_csv(string csv){ // méthodes qui va lire notre csv pour obtenir les noms des pays, questions réponses
     vector<vector<string> > content;
     vector<string> row;
     string line, words,word;
@@ -39,7 +39,7 @@ vector<vector<string> > Board::read_csv(string csv){
     return content;
 }
 
-vector <int> Board::random(int n,int max){
+vector <int> Board::random(int n,int max){ // méthode qui va créer un tableau d'entiers aléatoires
     vector <int> tab;
     int aleatoire=0;
     for(int i=0;i<n;i++){
@@ -51,7 +51,7 @@ vector <int> Board::random(int n,int max){
     }return tab;
 }
 
-int Board::appartient(int a,vector <int> tab ){
+int Board::appartient(int a,vector <int> tab ){ // méthode qui vérifie si un entier est dans notre tableau
     for(auto it:tab){
         if(it==a || it==0){
             return -1;
@@ -59,7 +59,7 @@ int Board::appartient(int a,vector <int> tab ){
     }return 0;
 }
 
-void Board::affiche_random(){
+void Board::affiche_random(){// affichage du tableau random
     for(auto it:tab){
         cout<<it<<" ";
     }cout << endl;
@@ -81,7 +81,7 @@ int Board::getLucky_indice(){
     return lucky_indice;
 }
 
-ostream& operator<<(ostream& os, const Board& plateau){
+ostream& operator<<(ostream& os, const Board& plateau){ // surchage d'opérateur permettant d'afficher les pays qu'on a dans notre plateau
     for(int i=0;i<plateau.board.size();i++){
         os << plateau.board[i]<< " ";
     }os <<endl;

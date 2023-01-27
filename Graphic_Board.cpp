@@ -1,10 +1,11 @@
 #include "Headers/Graphic_Board.hpp"
 
+//constructeurs initialisant notre partie graphique
 Graphic_Board::Graphic_Board(int Width,int Height,int rows,int cols):window(NULL),renderer(NULL),font(NULL),image(NULL),texture(NULL),Window_Width(Width),Window_Height(Height),num_rows(rows),num_cols(cols){
     color = {0, 0, 0, 0};
 }
 
-Graphic_Board::~Graphic_Board(){
+Graphic_Board::~Graphic_Board(){ //destructeur
     Mix_FreeChunk(correctSound);
     Mix_CloseAudio();
     SDL_DestroyTexture(diceTexture);
@@ -12,40 +13,34 @@ Graphic_Board::~Graphic_Board(){
     SDL_DestroyWindow(window);
 }
 
-void Graphic_Board::Init(){
-    // Initialize SDL2
+void Graphic_Board::Init(){ // initialisation de la fenetre, du rendu, police d'écriture et de la bande son
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
     cerr << "Error initializing SDL2: " << SDL_GetError() << endl;
   }
-
-  // Create the window
+  // Fenêtre
   window = SDL_CreateWindow("World Cup Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, Window_Width, Window_Height, 0);
   if (window == nullptr) {
     cerr << "Error creating window: " << SDL_GetError() << endl;
     exit(EXIT_FAILURE);	
   }
-
-  // Create the renderer
+ // Rendu
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
   if (renderer == nullptr) {
     cerr << "Error creating renderer: " << SDL_GetError() << endl;
     exit(EXIT_FAILURE);	
     }
-
-  // Initialize the TTF library
+  //Police d'écriture
   if (TTF_Init() != 0) {
     cerr << "Error initializing TTF: " << TTF_GetError() << endl;
     exit(EXIT_FAILURE);	
   }
-
-  // Load a font
   font = TTF_OpenFont("Sources/arial.ttf", 24);
   if (font == nullptr) {
     cerr << "Error loading font: " << TTF_GetError() << endl;
     exit(EXIT_FAILURE);	
   }
 
-  // Set up the audio device
+  // Partie audio
   int audio_rate = 22050;
   Uint16 audio_format = AUDIO_S16SYS;
   int audio_channels = 2;
@@ -53,18 +48,14 @@ void Graphic_Board::Init(){
   if (Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) != 0) {
     cerr << "Error opening audio device: " << Mix_GetError() << endl;
   }
-  // Load the sound effect for correct answers
   correctSound = Mix_LoadWAV("Sources/IHoqpnFWqJn_VEGEDREAM---RAMENEZ-LA-COUPE-A-LA-MAISON.mp3");
 }
 
-void Graphic_Board::load_image(){
-    // Load an image
+void Graphic_Board::load_image(){ // Chargement de l'image pour le plateau
     image = IMG_Load("image/football.png");
     if (image == nullptr) {
         cerr << "Error loading image: " << IMG_GetError() << endl;
     }
-
-    // Create a texture from the image
     texture = SDL_CreateTextureFromSurface(renderer, image);
     SDL_FreeSurface(image);
     if (texture == nullptr) {
@@ -72,13 +63,11 @@ void Graphic_Board::load_image(){
     }
 }
 
-void Graphic_Board::load_pawn(){
-    // Load the pawn image
+void Graphic_Board::load_pawn(){ // Chargement de l'image du pion
     SDL_Surface* pawnImage = IMG_Load("image/pawn.png");
     if (pawnImage == nullptr) {
         cerr << "Error loading image: " << IMG_GetError() << endl;
     }
-    // Create a texture from the pawn image
     pawnTexture = SDL_CreateTextureFromSurface(renderer, pawnImage);
     SDL_FreeSurface(pawnImage);
     if (pawnTexture == nullptr) {
@@ -97,7 +86,7 @@ void Graphic_Board::init_de(){ // Initialise le texte pour le dé
     diceRect.h=diceSurface->h;
 }
 
-void Graphic_Board::draw_pawn(Pion joueur,int x,int y){ // Ajoute l'image du pion
+void Graphic_Board::draw_pawn(Pion joueur,int x,int y){ // Crée un rectange ou il y aura le pion
     SDL_Rect pawnRect;
     pawnRect.x = joueur.get_x()* Window_Width/5+x;
     pawnRect.y = joueur.get_y()* Window_Height/5+y;
@@ -109,16 +98,13 @@ void Graphic_Board::draw_pawn(Pion joueur,int x,int y){ // Ajoute l'image du pio
 void Graphic_Board::init_plateau(){ // Initiliase les case du plateau de jeu
     for (int col = 0; col < num_cols; col++) {
       for (int row = 0; row < num_rows; row++) {
-        if (row==0 || row==num_rows-1 || col==0 || col==num_cols-1){
+        if (row==0 || row==num_rows-1 || col==0 || col==num_cols-1){ // conditions pour juste avoir les bords
             SDL_Rect rect;
             rect.x = row * Window_Width/5;
             rect.y = col * Window_Height/5;
             rect.w = Window_Width/5;
             rect.h = Window_Height/5;
-
-            // Set the color of the lines
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-            // Draw the lines of the rectangle
             SDL_RenderDrawRect(renderer, &rect);
         }
       }
@@ -207,7 +193,7 @@ void Graphic_Board::clean_screen(){
 	SDL_RenderClear(renderer);
 }
 
-void Graphic_Board::lance_quiz(Pion& joueur,int pays,vector <vector<string>> content){
+void Graphic_Board::lance_quiz(Pion& joueur,int pays,vector <vector<string>> content){ // Lance le quizz se servant de la classe graphique quizz
     if(content[pays][1]=="Boss"){
         Boss_team Case1(content[pays][0],content[pays][2],content[pays][3],content[pays][4],content[pays][5],content[pays][6]);
         Graphic_Quizz test(Window_Width,Window_Height);
@@ -225,7 +211,7 @@ void Graphic_Board::lance_quiz(Pion& joueur,int pays,vector <vector<string>> con
     }
 }
 
-void Graphic_Board::game_loop(Board Plateau,Pion & joueur1,Pion & joueur2){
+void Graphic_Board::game_loop(Board Plateau,Pion & joueur1,Pion & joueur2){ // La boucle principale pour le jeu
     int deplacement=0;
     string winner;
     Lucky_box Chance;

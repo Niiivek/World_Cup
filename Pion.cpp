@@ -7,7 +7,7 @@ Pion::Pion(string n):name(n){
     indice=0;
 }
 
-void Pion::deplacement(int move,int limit_x,int limit_y){   
+void Pion::deplacement(int move,int limit_x,int limit_y){ // déplacement au sein du plateau 
     if(x==0){ //horizontale haute
         //cout << "horizontale haute"<<endl;
         while(y!=limit_y-1 && move!=0){
@@ -35,7 +35,7 @@ void Pion::deplacement(int move,int limit_x,int limit_y){
     }
 }
 
-void Pion::augmenter_indice(int move, int indice_limit){
+void Pion::augmenter_indice(int move, int indice_limit){ // ajouter l'indice pour savoir où on est avec boucle 
     if(indice+move>indice_limit){
         while(indice!=indice_limit){
             indice++;
@@ -75,7 +75,7 @@ string Pion::get_name(){
     return name;
 }
 
-ostream& operator<<(ostream& os, const Pion& pion){
+ostream& operator<<(ostream& os, const Pion& pion){ // surchage d'opérateur permettant l'affichage des attributs du pion
     os << pion.name << " x:" << pion.x << " y:" << pion.y << " score:" << pion.score << " indice:" << pion.indice<<endl;
     return os;
 }

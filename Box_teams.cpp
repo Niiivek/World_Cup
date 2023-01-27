@@ -1,5 +1,6 @@
 #include "Headers/Box_teams.hpp"
 
+//constructeur de nos cases, affichages et getteurs
 Boss_team::Boss_team(string pays,string q,string r,string c1,string c2, string c3){
     name=pays;
     categorie="boss";

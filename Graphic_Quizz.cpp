@@ -1,8 +1,10 @@
 #include "Headers/Graphic_Quizz.hpp"
 
+// constructuer initialisant la partie graphique du quizz
 Graphic_Quizz::Graphic_Quizz(int Width,int Height):window(NULL),renderer(NULL),font(NULL),image(NULL),texture(NULL),Window_Width(Width),Window_Height(Height){
 }
 
+//destructeur 
 Graphic_Quizz::~Graphic_Quizz(){
     TTF_CloseFont(font);
     SDL_DestroyTexture(texture);
@@ -11,32 +13,26 @@ Graphic_Quizz::~Graphic_Quizz(){
 }
 
 void Graphic_Quizz::Init(){
-    // Initialize SDL2
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
     cerr << "Error initializing SDL2: " << SDL_GetError() << endl;
   }
-
-  // Create the window
+  // Fenêtre
   window = SDL_CreateWindow("Quiz", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, Window_Width, Window_Height, 0);
   if (window == nullptr) {
     cerr << "Error creating window: " << SDL_GetError() << endl;
     exit(EXIT_FAILURE);	
   }
-
-  // Create the renderer
+  //Rendu
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
   if (renderer == nullptr) {
     cerr << "Error creating renderer: " << SDL_GetError() << endl;
     exit(EXIT_FAILURE);	
     }
-
-  // Initialize the TTF library
+  // Police d'écriture
   if (TTF_Init() != 0) {
     cerr << "Error initializing TTF: " << TTF_GetError() << endl;
     exit(EXIT_FAILURE);	
   }
-
-  // Load a font
   font = TTF_OpenFont("Sources/arial.ttf", 24);
   if (font == nullptr) {
     cerr << "Error loading font: " << TTF_GetError() << endl;
@@ -44,15 +40,12 @@ void Graphic_Quizz::Init(){
   }
 }
 
-void Graphic_Quizz::load_image(){
-    // Load an image
+void Graphic_Quizz::load_image(){ // chargement de l'image pour le quizz
     image = IMG_Load("image/F.png");
     if (image == nullptr) {
         cerr << "Error loading image: " << IMG_GetError() << endl;
         exit(EXIT_FAILURE);	
     }
-
-    // Create a texture from the image
     texture = SDL_CreateTextureFromSurface(renderer, image);
     SDL_FreeSurface(image);
     if (texture == nullptr) {
@@ -61,7 +54,7 @@ void Graphic_Quizz::load_image(){
     }
 }
 
-void Graphic_Quizz::draw_question(){
+void Graphic_Quizz::draw_question(){ // écriture de la question
     SDL_Color color = {0, 0, 0, 0};
     SDL_Surface* questionSurface = TTF_RenderText_Solid(font, question.c_str(), color);
     SDL_Texture* questionTexture = SDL_CreateTextureFromSurface(renderer, questionSurface);
@@ -75,7 +68,7 @@ void Graphic_Quizz::draw_question(){
     SDL_DestroyTexture(questionTexture);
 }
 
-void Graphic_Quizz::draw_buttons(){
+void Graphic_Quizz::draw_buttons(){ // écriture des choix
     SDL_Color color = {0, 0, 0, 0};
     for (int i = 0; i < choices.size(); i++) {
         string buttonText = choices[i];
@@ -90,7 +83,7 @@ void Graphic_Quizz::draw_buttons(){
     }
 }
 
-void Graphic_Quizz::draw_result(string resultText,SDL_Texture* resultTexture){
+void Graphic_Quizz::draw_result(string resultText,SDL_Texture* resultTexture){ // écriture du résultat
     SDL_Color color = {0, 0, 0, 0};
     SDL_Surface* resultSurface = TTF_RenderText_Solid(font, resultText.c_str(), color);
     resultTexture = SDL_CreateTextureFromSurface(renderer, resultSurface);
@@ -103,8 +96,7 @@ void Graphic_Quizz::draw_result(string resultText,SDL_Texture* resultTexture){
     SDL_RenderCopy(renderer, resultTexture, nullptr, &resultRect);
 }
 
-void Graphic_Quizz::draw_score(Pion joueur){
-    //cout<< joueur.get_score()<<endl;
+void Graphic_Quizz::draw_score(Pion joueur){ // affiche le score du joueur
     string scoreText = "Score: " + to_string(joueur.get_score());
     SDL_Color color = {0, 0, 0, 0};
     SDL_Surface* scoreSurface = TTF_RenderText_Solid(font, scoreText.c_str(), color);
@@ -128,7 +120,7 @@ void Graphic_Quizz::clean_screen(){
 	SDL_RenderClear(renderer);
 }
 
-void Graphic_Quizz::init_quiz(Box_team pays){
+void Graphic_Quizz::init_quiz(Box_team pays){ // sauvegarde de la question et des réponses ainsi que les rectangles
     question=pays.getQ();
     answer=pays.getR();
     choices=pays.getChoices();
@@ -142,7 +134,7 @@ void Graphic_Quizz::init_quiz(Box_team pays){
     }
 }
 
-void Graphic_Quizz::quiz_loop(Pion & joueur,Box_team pays){
+void Graphic_Quizz::quiz_loop(Pion & joueur,Box_team pays){ // boucle principale permettant de faire le quiz
     string resultText;
     SDL_Texture* resultTexture = nullptr;
     State state = State::SHOW_QUESTION;

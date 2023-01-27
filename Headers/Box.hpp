@@ -15,16 +15,13 @@ public:
     virtual ~Box() = default;
     virtual void affiche(){cout <<"hi"<<endl;}
 protected:
-    //Variables
     string name;
-    //Methods
 };
 
 class Box_team: public Box{
 public:
     void affiche() override{cout <<"hi2"<<endl;} 
     string getQ();
-    string getC();
     map <int,string> getChoices();
     string getC1();
     string getC2();
