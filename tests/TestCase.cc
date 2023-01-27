@@ -9,6 +9,7 @@
 #include "Headers/Board.hh"
 #include <iostream>
 #include <string>
+#include <time.h>
 
 TEST_CASE("1: Pion")
 {
@@ -35,6 +36,8 @@ TEST_CASE("2: Cases")
 }
 
 TEST_CASE("3: Plateau de jeu"){
-  Board plateau("Sources/team_q.csv",16);
-  REQUIRE(plateau.getBoard().size()==16);
+  srand(time(NULL));
+  Board plateau("../Sources/team_q.csv",15);
+  REQUIRE(plateau.getBoard().size()==15);
+  cout << plateau; // des pays différents à chaque fois donc c'est bon
 }

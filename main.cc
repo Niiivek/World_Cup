@@ -10,7 +10,6 @@
 #include <sstream>
 #include <fstream>
 #include <string>
-#include <list>
 #include <vector>
 #include <cmath>
 using namespace std;
