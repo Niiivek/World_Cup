@@ -76,6 +76,6 @@ string Pion::get_name(){
 }
 
 ostream& operator<<(ostream& os, const Pion& pion){ // surchage d'opérateur permettant l'affichage des attributs du pion
-    os << pion.name << " x:" << pion.x << " y:" << pion.y << " score:" << pion.score << " indice:" << pion.indice<<endl;
+    os << pion.name << " x:" << pion.x << " y:" << pion.y << " score:" << pion.score << " indice:" << pion.indice;
     return os;
 }

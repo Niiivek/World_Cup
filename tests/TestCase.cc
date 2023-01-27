@@ -10,19 +10,31 @@
 #include <iostream>
 #include <string>
 
-TEST_CASE("1: Création du plateau de jeu")
+TEST_CASE("1: Pion")
 {
-  Pion joueur("name");
-  int x=0;
-  REQUIRE(x==0);
+  Pion joueur("Joueur 1");
+  REQUIRE(joueur.get_name()=="Joueur 1");
+  joueur.augmenter_score(10);
+  joueur.augmenter_indice(2,5);
+  REQUIRE(joueur.get_score()==10);
+  REQUIRE(joueur.get_indice()==2);
+  joueur.deplacement(2,5,5);
+  std::stringstream ss;
+  ss << joueur;
+  REQUIRE(ss.str()=="Joueur 1 x:0 y:2 score:10 indice:2");
+
 }
 
-/*TEST_CASE("2: Tableau2D with string")
+TEST_CASE("2: Cases")
 {
-  Tableau2D<std::string> tab(4,4);
-  tab(1,3) = "ABC";
-  REQUIRE(tab(1,3)== "ABC");
-  REQUIRE(tab(3,3)== "");
-  std::cout << " ----------- Tableau string --------------" << std::endl;
-  std::cout << tab << std::endl;
-}*/
+  Boss_team Case1("France","Quelle est la capitale de la France ?","Paris","Bordeaux","Marseille","Paris");
+  REQUIRE(Case1.getC1()=="Bordeaux");
+  REQUIRE(Case1.getR()=="Paris");
+  REQUIRE(Case1.getQ()=="Quelle est la capitale de la France ?");
+  REQUIRE(Case1.getScore()==5);
+}
+
+TEST_CASE("3: Plateau de jeu"){
+  Board plateau("Sources/team_q.csv",16);
+  REQUIRE(plateau.getBoard().size()==16);
+}
