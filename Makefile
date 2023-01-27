@@ -2,9 +2,9 @@ CC=g++
 #CCFLAGS= -Wall -Werror -std=c++11 -g 
 CCFLAGS= -Wall -std=c++11 -g 
 LIBFLAGS= `pkg-config --cflags --libs sdl2 sdl2_image sdl2_ttf sdl2_mixer`
-SRC= $(wildcard *.cpp)
-OBJ= $(SRC:.cpp=.o)
-OBJ_TEST = $(filter-out main.o, $(OBJ)) $(TST:.cpp=.o)
+SRC= $(wildcard *.cc)
+OBJ= $(SRC:.cc=.o)
+OBJ_TEST = $(filter-out main.o, $(OBJ)) $(TST:.cc=.o)
 EXEC= test
 
 
@@ -13,7 +13,7 @@ all: $(EXEC)
 $(EXEC): $(OBJ)
 	$(CC)  $(CCFLAGS)  $^ -o $@  $(LIBFLAGS)
 
-%.o: %.cpp
+%.o: %.cc
 	$(CC) $(LIBFLAGS) $(CCFLAGS) -o $@ -c $<
 
 .depend:

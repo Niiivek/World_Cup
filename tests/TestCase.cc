@@ -2,12 +2,17 @@
 #define CATCH_CONFIG_MAIN
 
 #include "catch.hpp"
-#include "Box.hpp"
+#include "Headers/Box.hh"
+#include "Headers/Box_teams.hh"
+#include "Headers/Box_others.hh"
+#include "Headers/Pion.hh"
+#include "Headers/Board.hh"
 #include <iostream>
 #include <string>
 
 TEST_CASE("1: Création du plateau de jeu")
 {
+  Pion joueur("name");
   int x=0;
   REQUIRE(x==0);
 }
