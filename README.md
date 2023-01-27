@@ -33,6 +33,7 @@ Selon la machine utilisé le makefile est à modifier
 Pour compiler le programme :
 
 make dans le fichier principale
+il peut y'avoir des warnings parfois mais cela ne change pas le fonctionnement du jeu.
 
 Pour lancer une partie:
 
