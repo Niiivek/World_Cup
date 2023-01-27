@@ -42,7 +42,7 @@ private:
     int Window_Height;
     string question;
     string answer;
-    vector<string> choices;
+    map<int,string> choices;
     vector<SDL_Rect> buttonRects;
 
 };

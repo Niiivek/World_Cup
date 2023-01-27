@@ -267,7 +267,7 @@ void Graphic_Board::game_loop(Board Plateau,Pion & joueur1,Pion & joueur2){
                     }else if(turn==Turn::PLAYER_2){
                         if(x>=diceRect.x && x<diceRect.x+diceRect.w && y >= diceRect.y && y < diceRect.y + diceRect.h){
                             deplacement=rand()%5+1;
-                            cout<<"Tour du"+ joueur2.get_name()<<endl;
+                            cout<<"Tour du "+ joueur2.get_name()<<endl;
                             cout<<"Le dé est tombé sur "+ to_string(deplacement)<<endl;
                             joueur2.deplacement(deplacement,num_rows,num_cols);
                             joueur2.augmenter_indice(deplacement,15);
@@ -284,7 +284,7 @@ void Graphic_Board::game_loop(Board Plateau,Pion & joueur1,Pion & joueur2){
         SDL_RenderCopy(renderer, texture, NULL, NULL);
         if(turn!=Turn::VICTORY){
             SDL_RenderCopy(renderer, diceTexture, nullptr, &diceRect);
-            draw_pawn(joueur1,100,25);
+            draw_pawn(joueur1,90,25);
             draw_pawn(joueur2,140,25);
             init_plateau();
             init_case();

@@ -53,7 +53,6 @@ private:
     Uint16 audio_format;
     int audio_buffers;
     Mix_Chunk* correctSound;
-    //SDL_Surface* pawnImage;
     SDL_Texture* pawnTexture;
     vector<string> countries;
     vector<SDL_Rect> buttonRects;

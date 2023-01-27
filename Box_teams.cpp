@@ -4,7 +4,7 @@ Boss_team::Boss_team(string pays,string q,string r,string c1,string c2, string c
     name=pays;
     categorie="boss";
     question=q;
-    choices={c1,c2,c3};
+    choices={{0,c1}, {1,c2}, {2,c3}};
     reponse=r;
     score=5;
     malus=2;
@@ -18,7 +18,7 @@ Normal_team::Normal_team(string pays,string q,string r,string c1,string c2, stri
     name=pays;
     categorie="normal";
     question=q;
-    choices={c1,c2,c3};
+    choices={{0,c1}, {1,c2}, {2,c3}};
     reponse=r;
     score=2;
     malus=1;
@@ -32,7 +32,7 @@ string Box_team::getQ(){
     return question;
 }
 
-vector <string> Box_team::getChoices(){
+map <int,string> Box_team::getChoices(){
     return choices;
 }
 

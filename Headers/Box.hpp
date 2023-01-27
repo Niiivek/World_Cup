@@ -25,7 +25,7 @@ public:
     void affiche() override{cout <<"hi2"<<endl;} 
     string getQ();
     string getC();
-    vector <string> getChoices();
+    map <int,string> getChoices();
     string getC1();
     string getC2();
     string getC3();
@@ -35,7 +35,7 @@ public:
 protected: 
     string categorie;
     string question;
-    vector<string> choices;
+    map <int,string> choices;
     string reponse;
     int score;
     int malus;
