@@ -7,6 +7,7 @@
 #include <cmath>
 #include <vector>
 #include "Box_teams.hpp"
+#include "Box_others.hpp"
 #include "Pion.hpp"
 #include "Board.hpp"
 #include "Utility.hpp"
