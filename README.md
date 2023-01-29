@@ -1,5 +1,4 @@
-![premier question](https://user-images.githubusercontent.com/92987250/215335700-ce1a656f-4f6a-4673-9630-3303bd79fd3f.png)
-![deplacement pion](https://user-images.githubusercontent.com/92987250/215335712-14e7fcce-bfb5-45e7-b6cd-2ee48dd63b6a.png)
+
 # World_Cup game
 
 ![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white)
@@ -53,5 +52,7 @@ make dans le fichier principale puis cd tests puis make puis ./testcase
 
 ## Images
 ![jeu_foot](https://user-images.githubusercontent.com/92987250/214931389-09de4ecc-d1b9-46d6-9b0c-1f4ae59004d8.png)
+![premier question](https://user-images.githubusercontent.com/92987250/215335700-ce1a656f-4f6a-4673-9630-3303bd79fd3f.png)
+![deplacement pion](https://user-images.githubusercontent.com/92987250/215335712-14e7fcce-bfb5-45e7-b6cd-2ee48dd63b6a.png)
 
 
